@@ -27,9 +27,17 @@ function readFilePromise(filePath) {
   });
 }
 
-readFilePromise(userCLIArgs[0]).then((data) => {
+readFilePromise(userCLIArgs[0]).then(() => {
 
-  
+  const path = userCLIArgs[0];
+
+
+  let text = fs.readFileSync(path).toString();
+  let lines = text.split('\n');
+  let newlinesCount = lines.length - 1;
+  console.log(newlinesCount);
+  console.log('..................................FUNCION READ PROMISE')
+  console.log('LINEA QUINCE......................'+lines[15])
 
   //console.log('EXPERIMENTO CHAN CHAN CHAN> ' + (data.split('\r\n') + 'OMG')); // \r\n porque uso windows
   // forEach((elemento, index)=>{})
@@ -38,17 +46,7 @@ readFilePromise(userCLIArgs[0]).then((data) => {
 });
 
 
-const path = process.argv[2];
 
-
-  let text = fs.readFileSync(path).toString();
-  let lines = text.split('\n');
-  let newlinesCount = lines.length - 1;
-  console.log(newlinesCount);
-  console.log(lines[0]+'LINEA UNO')
-  console.log(lines[1]+'LINEA DOS')
-  console.log(lines[2]+'LINEA TRES')
-  console.log('LINEA QUINCE......................'+lines[15])
 
 
 // Función necesaria para extraer los links usando marked
