@@ -22,15 +22,12 @@
   },
   "homepage": "https://github.com/carocromatica/scl-2018-01-FE-markdown#readme",
   "devDependencies": {
-    "eslint": "^5.4.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-google": "^0.9.1",
     "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^7.0.1",
-    "eslint-plugin-promise": "^4.0.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "jest": "^23.5.0"
+        "eslint-plugin-import": "^2.12.0",
+        "eslint-plugin-node": "^6.0.1",
+        "eslint-plugin-promise": "^3.8.0",
+        "eslint-plugin-standard": "^3.1.0",
+        "jest": "^23.5.0"
   },
   "dependencies": {
     "yarn-install": "^1.0.0"
