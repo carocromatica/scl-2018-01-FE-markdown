@@ -14,7 +14,7 @@ function readFilePromise(filePath) {
       if (error) {
         return reject(error);
       }
-      markdownLinkExtractor(data);// agregado x caro
+      markdownLinkExtractor(data);
       return resolve(data);  
     });
   });
@@ -22,7 +22,7 @@ function readFilePromise(filePath) {
 readFilePromise(userCLIArgs[0]).then(() => {
   let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
   let lines = text.split('\n');
-  
+
   lines.map(element => {
     numLine = (lines.indexOf(element) + 1);
     console.log(numLine + '..............' + element);
