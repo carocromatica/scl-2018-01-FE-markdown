@@ -9,24 +9,18 @@ let numLine;
 const [, , ...userCLIArgs] = process.argv;
 
 function readFilePromise(filePath) {
-  return new Promise((resolve, reject) => {
+  return new Promise((reject) => {
     fs.readFile(filePath, 'utf-8', (error, data) => {
       if (error) {
         return reject(error);
       }
-      markdownLinkExtractor(data);
-      return resolve(data);  
+      markdownLinkExtractor(data,numLine);
+      
     });
   });
 }
 readFilePromise(userCLIArgs[0]).then(() => {
-  let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
-  let lines = text.split('\n');
 
-  lines.map(element => {
-    numLine = (lines.indexOf(element) + 1);
-    console.log(numLine + '..............' + element);
-  });
 }).catch((error) => {
   console.error('Error > ' + error);
 });
@@ -36,6 +30,15 @@ readFilePromise(userCLIArgs[0]).then(() => {
 // (tomada desde biblioteca del mismo nombre y modificada para el ejercicio)
 // Recibe texto en markdown y retorna sus links en un arreglo
 function markdownLinkExtractor(markdown) {
+
+  let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
+  let lines = text.split('\n');
+
+  lines.map(element => {
+    numLine = (lines.indexOf(element) + 1);
+    console.log(numLine + '..............' + element);
+  });
+  
   const links = [];
 
   const renderer = new Marked.Renderer();
@@ -55,39 +58,50 @@ function markdownLinkExtractor(markdown) {
       numLine
     });
   };
-  renderer.image = function(href, title, text, numLine) {
+  renderer.image = function(href, title, text,numLine) {
     // Remove image size at the end, e.g. ' =20%x50'
     href = href.replace(/ =\d*%?x\d*%?$/, '');
     links.push({
       href,
       text,
       title,
-      numLine,
+      numLine
     });
   };
   Marked(markdown, { renderer });
-  validateUrl(links);
-  console.log(links);
-}
 
-function validateUrl(links) {
   links.forEach((element) => { // busca dentro del objeto links
     const url = element.href;
+    const txt = element.text;
+    const line = element.numline;
 
     fetch(url).then(response => response).then((data) => {
-      if (data.status >= 400 && data.status <= 499) {
-        console.log((colors.red(url)));
-        console.log((colors.red(data.status)));
-        console.log((colors.red(data.statusText)));
-      }
+      validate = {
+        'text': txt,
+        'url': url,
+        'status': data.statusText + ' ' + data.status,
+        'linea': line,
+      };
 
-      if (data.status >= 200 && data.status <= 299) {
-        console.log(url);
-        console.log((colors.green(data.status)));
-        console.log(data.statusText);
-      }
+      // if (data.status >= 400 && data.status <= 499) {
+      //   console.log((colors.red(txt)));
+      //   console.log((colors.red(url)));
+      //   console.log((colors.red(data.status)));
+      //   console.log((colors.red(data.statusText)));
+      //   console.log(numberlist);
+      // }
+
+      // if (data.status >= 200 && data.status <= 299) {
+      //   console.log(txt);
+      //   console.log(url);
+      //   console.log((colors.green(data.status)));
+      //   console.log(data.statusText);
+      //   console.log(numberlist);
+      // }
+
+      console.log(validate);
     }).catch(() => {
-      console.error('ERROR');
+      console.error('error de catch');
     });
   });
 }
