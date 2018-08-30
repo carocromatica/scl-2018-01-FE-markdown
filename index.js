@@ -1,52 +1,35 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const fetch = require('node-fetch');
 const colors = require('colors');
 const Marked = require('marked');
-
-// console.log('Process.argv  HOLO HOLO>' + JSON.stringify(process.argv));
-// console.log('HELOW HELOW > ' + process.cwd());
-// Me va a indicar donde se está ejecutando el archivo
+let numLine;
 
 const [, , ...userCLIArgs] = process.argv;
-// console.log('QUE ES ESTOOOO > ' + JSON.stringify(userCLIArgs));
-// User args > ["HoliHoli","--validate","--stats"]
 
-/*
- * Función que lee un archivo y retorna promesa con su contenido
- */
 function readFilePromise(filePath) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, 'utf-8', (error, data) => {
       if (error) {
-        return reject(error);// Sabemos que hay un error, así que rechazamos la promesa
-        // Si hay error, también nos aseguramos con return de no seguir ejecutando nada más en esta función
+        return reject(error);
       }
       markdownLinkExtractor(data);// agregado x caro
-      return resolve(data); // si elimino esta linea no muestra texto de readme
+      return resolve(data);  
     });
   });
 }
-
 readFilePromise(userCLIArgs[0]).then(() => {
-
-  const path = userCLIArgs[0];
-
-
-  let text = fs.readFileSync(path).toString();
+  let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
   let lines = text.split('\n');
-  let newlinesCount = lines.length - 1;
-  console.log(newlinesCount);
-  console.log(path)
-  console.log('LINEA QUINCE......................'+lines[15])
-
-  //console.log('EXPERIMENTO CHAN CHAN CHAN> ' + (data.split('\r\n') + 'OMG')); // \r\n porque uso windows
-  // forEach((elemento, index)=>{})
+  
+  lines.map(element => {
+    numLine = (lines.indexOf(element) + 1);
+    console.log(numLine + '..............' + element);
+  });
 }).catch((error) => {
   console.error('Error > ' + error);
 });
-
-
-
 
 
 // Función necesaria para extraer los links usando marked
@@ -64,25 +47,27 @@ function markdownLinkExtractor(markdown) {
   Marked.InlineLexer.rules.gfm.link = linkWithImageSizeSupport;
   Marked.InlineLexer.rules.breaks.link = linkWithImageSizeSupport;
 
-  renderer.link = function(href, title, text) {
+  renderer.link = function(href, title, text, numLine) {
     links.push({
       href,
       text,
       title,
+      numLine
     });
   };
-  renderer.image = function(href, title, text) {
+  renderer.image = function(href, title, text, numLine) {
     // Remove image size at the end, e.g. ' =20%x50'
     href = href.replace(/ =\d*%?x\d*%?$/, '');
     links.push({
       href,
       text,
       title,
+      numLine,
     });
   };
   Marked(markdown, { renderer });
   validateUrl(links);
-  //console.log(links);
+  console.log(links);
 }
 
 function validateUrl(links) {
@@ -101,7 +86,7 @@ function validateUrl(links) {
         console.log((colors.green(data.status)));
         console.log(data.statusText);
       }
-    }).catch((error) => {
+    }).catch(() => {
       console.error('ERROR');
     });
   });
