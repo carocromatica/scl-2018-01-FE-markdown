@@ -36,7 +36,7 @@ readFilePromise(userCLIArgs[0]).then(() => {
   let lines = text.split('\n');
   let newlinesCount = lines.length - 1;
   console.log(newlinesCount);
-  console.log('..................................FUNCION READ PROMISE')
+  console.log(path)
   console.log('LINEA QUINCE......................'+lines[15])
 
   //console.log('EXPERIMENTO CHAN CHAN CHAN> ' + (data.split('\r\n') + 'OMG')); // \r\n porque uso windows
