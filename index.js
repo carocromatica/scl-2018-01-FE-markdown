@@ -53,7 +53,7 @@ function markdownLinkExtractor(markdown) {
   console.log(userCLIArgs[0])
   lines.map(element => {
     numLine = (lines.indexOf(element) + 1);
-    //console.log(numLine+ '..............' + element);
+    console.log(numLine+ '..............' + element);
 
     
   });

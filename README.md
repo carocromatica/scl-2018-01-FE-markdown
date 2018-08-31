@@ -289,7 +289,7 @@ function markdownLinkExtractor(markdown) {
 - [What exactly is Node.js? - freeCodeCamp](https://medium.freecodecamp.org/what-exactly-is-node-js-ae36e97449f5)
 - [¿Qué es Node.js y para qué sirve? - drauta.com](https://www.drauta.com/que-es-nodejs-y-para-que-sirve)
 - [¿Qué es Nodejs? Javascript en el Servidor - Fazt en YouTube](https://www.youtube.com/watch?v=WgSc1nv_4Gw)
-- [¿Simplemente qué es Node.js? - IBM Developer Works, 2011](https://www.ibm.com/developerworks/ssa/opensource/library/os-nodejs/index.html)
+- [¿Simplemente qué es Node.js? - IBM Developer Works, 2011](https://es.wikipedia.org/wiki/Jgjhghjghjg)
 
 ## Evaluación
 
