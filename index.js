@@ -32,6 +32,8 @@ function readFilePromise(filePath) {
 
 readFilePromise(userCLIArgs[0]).then(() => {
 
+  // si borro esta promesa el archivo no funciona ._.
+
 }).catch((error) => {
   console.error('Error > ' + error);
 });
@@ -76,20 +78,20 @@ function markdownLinkExtractor(markdown, numLine) {
   let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
 
   let lines = text.split('\n');
-  // console.log(text);
+   console.log(lines);
 
-  let lineline = lines.forEach((element, index) => {
-    numLine = index + 1;
+  let lineline = lines.forEach((element, index)=> {
+    numLine = index+1;
     
     console.log(numLine + '...' + element);
-  });
+  }) ;
 
  // fin FUNCIÓN QUE LEE LINEAS
 
-  links.forEach((element, lineline) => { // busca dentro del objeto links
+  links.forEach((element, numline) => { // busca dentro del objeto links
     const url = element.href;
     const txt = element.text;
-    const line = lineline;
+    const line = numline;
 
     fetch(url).then(response => response).then((data) => {
 
