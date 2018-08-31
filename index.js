@@ -1,12 +1,10 @@
 #!/usr/bin/env node
-
 const fs = require('fs');
 const fetch = require('node-fetch');
 const colors = require('colors');
 const Marked = require('marked');
 let numLine;
 let validate = {};
-
 const links = [];
 
 const [, , ...userCLIArgs] = process.argv;
@@ -21,18 +19,13 @@ function readFilePromise(filePath) {
           return reject(error);
         }
         return reject(error);
-      }
-
-  
-      
+      }  
       markdownLinkExtractor(data);
     });
   });
 }
 
 readFilePromise(userCLIArgs[0]).then(() => {
-
-  // si borro esta promesa el archivo no funciona ._.
 
 }).catch((error) => {
   console.error('Error > ' + error);
@@ -72,35 +65,31 @@ function markdownLinkExtractor(markdown, numLine) {
   };
   Marked(markdown, { renderer });
 
-
-  //FUNCIÓN QUE LEE LINEAS
-
+  // FUNCIÓN QUE LEE LINEAS
   let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
-
   let lines = text.split('\n');
-   console.log(lines);
+  // console.log(lines);
 
   let lineline = lines.forEach((element, index)=> {
-    numLine = index+1;
-    
-    console.log(numLine + '...' + element);
+    numLine = index + 1;    
+    // console.log(numLine + '...' + element);
   }) ;
 
- // fin FUNCIÓN QUE LEE LINEAS
+  // fin FUNCIÓN QUE LEE LINEAS{}
+  if (links === []) {
+    console.log(links + 'El archivo no contiene hipervinculos');
+  }
 
-  links.forEach((element, numline) => { // busca dentro del objeto links
+  links.forEach((element, lineline) => { // busca dentro del objeto links
     const url = element.href;
     const txt = element.text;
-    const line = numline;
+    const line = lineline;
 
     fetch(url).then(response => response).then((data) => {
-
       validate = {
-      
-        'Status': data.status + ' ' + data.statusText + ' // Linea: ' + line + ' ' + txt + ' ' + url,
-        
+        'Status': data.status + ' ' + data.statusText + ' // Linea: ' + line + ': [' + txt + ']~ ' + url,
       };
-      
+
       if (data.status >= 200 && data.status <= 399) {
         console.log(colors.green(validate));
       }

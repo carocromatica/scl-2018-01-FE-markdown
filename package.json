@@ -1,10 +1,10 @@
 {
-  "name": "mdlinks",
-  "version": "1.0.0",
+  "name": "caro-mdlinks",
+  "version": "1.0.1",
   "description": "Proyecto Librería node.js",
   "main": "index.js",
   "bin": {
-    "mdlinks": "index.js"
+    "md-links": "/index.js"
   },
   "scripts": {
     "test": "jest"
