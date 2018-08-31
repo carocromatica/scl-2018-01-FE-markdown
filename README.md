@@ -2,7 +2,7 @@
 
 ## Presentación
 
-**Md-links** es una librería que te permite revisar los links (*href*) en un `archivo.md` (markdown). El propósito de **_Md-Links* es que puedas verificar el status en el que se encuentran los enlaces_**. Por ejemplo, si el link encontrado se encuentra disponible, la aplicación mostrará `status: 200 Ok`. En caso contrario, y el link está roto, la consola mostrará, por ejemplo, `status: 404 Not Found`.
+**Md-links** es una librería que te permite revisar los links (*href*) en un `archivo.md` (markdown). **_El propósito de Md-Links es que puedas verificar el status en el que se encuentran los enlaces_**. Por ejemplo, si el link encontrado se encuentra disponible, la aplicación mostrará `status: 200 Ok`. En caso contrario, y el link está roto, la consola mostrará, por ejemplo, `status: 404 Not Found`.
 Si los hipervínculos no tienen problemas se visualizarán en **verde**, de lo contrario, aquellos que no estén disponibles se verán en **rojo**.
 
 Foto:
