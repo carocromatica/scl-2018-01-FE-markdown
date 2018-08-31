@@ -4,7 +4,10 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 const colors = require('colors');
 const Marked = require('marked');
-let numLine=[];
+let numLine;
+let validate = {};
+
+const links = [];
 
 const [, , ...userCLIArgs] = process.argv;
 
@@ -12,55 +15,31 @@ function readFilePromise(filePath) {
   return new Promise((reject) => {
     fs.readFile(filePath, 'utf-8', (error, data) => {
       if (error) {
-
-
-        let validatePath=filePath.substr(filePath.length - 3);
-
-        if (validatePath!='.md'){
-          console.log('ingrese archivo valido')
+        let validatePath = filePath.substr(filePath.length - 3);
+        if (validatePath !== '.md') {
+          console.log('ingrese archivo valido');
           return reject(error);
-         
         }
-    
-
         return reject(error);
       }
-      markdownLinkExtractor(data,numLine);
+
+  
       
-   
-     
+      markdownLinkExtractor(data);
     });
   });
 }
+
 readFilePromise(userCLIArgs[0]).then(() => {
-
-
 
 }).catch((error) => {
   console.error('Error > ' + error);
 });
 
-
 // Función necesaria para extraer los links usando marked
 // (tomada desde biblioteca del mismo nombre y modificada para el ejercicio)
 // Recibe texto en markdown y retorna sus links en un arreglo
-function markdownLinkExtractor(markdown) {
-
-
-
-  let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
-  let lines = text.split('\n');
-  console.log(userCLIArgs[0])
-  lines.map(element => {
-    numLine = (lines.indexOf(element) + 1);
-    console.log(numLine+ '..............' + element);
-
-    
-  });
-
-  
-  const links = [];
-
+function markdownLinkExtractor(markdown, numLine) {
   const renderer = new Marked.Renderer();
 
   // Taken from https://github.com/markedjs/marked/issues/1279
@@ -70,56 +49,63 @@ function markdownLinkExtractor(markdown) {
   Marked.InlineLexer.rules.gfm.link = linkWithImageSizeSupport;
   Marked.InlineLexer.rules.breaks.link = linkWithImageSizeSupport;
 
-  renderer.link = function(href, title, text, line) {
+  renderer.link = function(href, title, text, numLine) {
     links.push({
       href,
       text,
       title,
-      line:line
+      numLine
     });
   };
-  renderer.image = function(href, title, text,line) {
+  renderer.image = function(href, title, text, numLine) {
     // Remove image size at the end, e.g. ' =20%x50'
     href = href.replace(/ =\d*%?x\d*%?$/, '');
     links.push({
       href,
       text,
       title,
-      line:line
+      numLine,
+    
     });
   };
   Marked(markdown, { renderer });
 
-  links.forEach((element) => { // busca dentro del objeto links
+
+  //FUNCIÓN QUE LEE LINEAS
+
+  let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
+
+  let lines = text.split('\n');
+  // console.log(text);
+
+  let lineline = lines.forEach((element, index) => {
+    numLine = index + 1;
+    
+    console.log(numLine + '...' + element);
+  });
+
+ // fin FUNCIÓN QUE LEE LINEAS
+
+  links.forEach((element, lineline) => { // busca dentro del objeto links
     const url = element.href;
     const txt = element.text;
-    const line = element.line;
+    const line = lineline;
 
     fetch(url).then(response => response).then((data) => {
+
       validate = {
-        'text': txt,
-        'url': url,
-        'status': data.statusText + ' ' + data.status,
-        'linea': line
+      
+        'Status': data.status + ' ' + data.statusText + ' // Linea: ' + line + ' ' + txt + ' ' + url,
+        
       };
+      
+      if (data.status >= 200 && data.status <= 399) {
+        console.log(colors.green(validate));
+      }
 
-      // if (data.status >= 400 && data.status <= 499) {
-      //   console.log((colors.red(txt)));
-      //   console.log((colors.red(url)));
-      //   console.log((colors.red(data.status)));
-      //   console.log((colors.red(data.statusText)));
-      //   console.log(numberlist);
-      // }
-
-      // if (data.status >= 200 && data.status <= 299) {
-      //   console.log(txt);
-      //   console.log(url);
-      //   console.log((colors.green(data.status)));
-      //   console.log(data.statusText);
-      //   console.log(numberlist);
-      // }
-
-      console.log(validate);
+      if (data.status >= 400 && data.status <= 499) {
+        console.log(colors.red(validate));
+      }
     }).catch(() => {
       console.error('error de catch');
     });
