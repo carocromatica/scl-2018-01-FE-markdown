@@ -29,3 +29,8 @@ Si el archivo se encuentra fuera de la carpeta donde estás ejecutando la funci�
 `/mnt/d/usuarios/documentos/mdlinks: $ node index.js Mnt/d/usuarios/documentos/README.md`  
 
 El programa se ejecutará y te desplegará la lista de links de tu archivo md.  
+
+`{ Status: '200 OK // Linea: 9: [Figma]~ https://www.figma.com/' }`
+
+La aplicación mostrará en pantalla si el archivo ingresado no tiene la extensión correcta o si no tiene links.
+
