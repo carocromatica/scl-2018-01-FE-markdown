@@ -3,7 +3,6 @@ const fs = require('fs');
 const fetch = require('node-fetch');
 const colors = require('colors');
 const Marked = require('marked');
-let numLine;
 let validate = {};
 const links = [];
 
@@ -62,6 +61,11 @@ function markdownLinkExtractor(markdown, numLine) {
       numLine,
     
     });
+
+    if (links === []) {
+      console.log(links + 'El archivo no contiene hipervinculos');
+    }
+  
   };
   Marked(markdown, { renderer });
 
@@ -76,15 +80,11 @@ function markdownLinkExtractor(markdown, numLine) {
   }) ;
 
   // fin FUNCIÓN QUE LEE LINEAS{}
-  if (links === []) {
-    console.log(links + 'El archivo no contiene hipervinculos');
-  }
 
   links.forEach((element, lineline) => { // busca dentro del objeto links
     const url = element.href;
     const txt = element.text;
     const line = lineline;
-
     fetch(url).then(response => response).then((data) => {
       validate = {
         'Status': data.status + ' ' + data.statusText + ' // Linea: ' + line + ': [' + txt + ']~ ' + url,
