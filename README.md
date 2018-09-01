@@ -19,8 +19,11 @@ Para hacer funcionar **md-links** necesitas primero instalar las dependencias de
 `$ npm install colors`  
 
 Luego copia el archivo index.js en la carpeta.  
+
 Para ejecutar la función debes colocar el comando + ruta del archivo, como por ejemplo:  
+
 `/mnt/d/usuarios/documentos/mdlinks: $ node index.js README.md`  
+
 Si el archivo se encuentra fuera de la carpeta donde estás ejecutando la función, debes colocar la ruta completa:  
 
 `/mnt/d/usuarios/documentos/mdlinks: $ node index.js Mnt/d/usuarios/documentos/README.md`  
