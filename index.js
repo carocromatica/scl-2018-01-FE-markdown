@@ -84,11 +84,6 @@ function markdownLinkExtractor(markdown, numLine) {
       finalnumline = numLine + 1;
      
 console.log(finalnumline);
-
-
-
-
-
       //console.log(links);
     }
   }) ;
