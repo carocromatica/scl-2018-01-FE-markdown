@@ -1,3 +1,4 @@
+![mdlinks](https://i.imgur.com/Dm8VQx2.png)
 # Md-Links
 
 ## Presentación
@@ -7,6 +8,11 @@ Si los hipervínculos no tienen problemas se visualizarán en **verde**, de lo c
 
 #### Vista Previa
 ![mdlinks](https://i.imgur.com/Dm8VQx2.png)
+![mdlinks](https://i.imgur.com/Dm8VQx2.png)
+![mdlinks](https://i.imgur.com/Dm8VQx2dsadasd.png)
+
+
+
 
 
 ## Instalación y uso (versión de prueba)
@@ -30,7 +36,7 @@ Si el archivo se encuentra fuera de la carpeta donde estás ejecutando la funci�
 
 El programa se ejecutará y te desplegará la lista de links de tu archivo md.  
 
-`{ Status: '200 OK // Linea: 9: [Figma]~ https://www.figma.com/' }`
+`{ Status: '200 OK // Linea: 9: [Figma]~ //www.figma.com/' }`
 
 La aplicación mostrará en pantalla si el archivo ingresado no tiene la extensión correcta o si no tiene links.
 

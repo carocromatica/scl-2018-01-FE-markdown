@@ -43,63 +43,48 @@ function markdownLinkExtractor(markdown, numLine) {
   Marked.InlineLexer.rules.gfm.link = linkWithImageSizeSupport;
   Marked.InlineLexer.rules.breaks.link = linkWithImageSizeSupport;
 
-  renderer.link = function(href, title, text) {
+  renderer.link = function(href, title, text, numLine) {
     links.push({
       href,
       text,
       title,
-    
+      numLine
     });
   };
-  renderer.image = function(href, title, text) {
+  renderer.image = function(href, title, text, numLine) {
     // Remove image size at the end, e.g. ' =20%x50'
     href = href.replace(/ =\d*%?x\d*%?$/, '');
     links.push({
       href,
       text,
       title,
- 
+      numLine,
+    
     });
 
     if (links === []) {
       console.log(links + 'El archivo no contiene hipervinculos');
     }
+  
   };
   Marked(markdown, { renderer });
 
   // FUNCIÓN QUE LEE LINEAS
   let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
   let lines = text.split('\n');
-  let n = 0; 
+  // console.log(lines);
 
-  lines.forEach((element, index)=> {
-    numLine = index;    
-    let newline = index + '' + element;
-    // console.log(newline);
-    
-    if (newline.search('https://' || 'http://')) {
-      n = newline.search('https://' || 'http://');
-    }
-    if (n !== -1) {
-      finalnumline = numLine + 1;
-     
-console.log(finalnumline);
-
-
-
-
-
-      //console.log(links);
-    }
+  let lineline = lines.forEach((element, index)=> {
+    numLine = index + 1;    
+    // console.log(numLine + '...' + element);
   }) ;
 
   // fin FUNCIÓN QUE LEE LINEAS{}
 
-  links.forEach((element) => { // busca dentro del objeto links
+  links.forEach((element, lineline) => { // busca dentro del objeto links
     const url = element.href;
     const txt = element.text;
-    const line = finalnumline;
-    
+    const line = lineline;
     fetch(url).then(response => response).then((data) => {
       validate = {
         'Status': data.status + ' ' + data.statusText + ' // Linea: ' + line + ': [' + txt + ']~ ' + url,
