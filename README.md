@@ -42,3 +42,5 @@ La aplicación mostrará en pantalla si el archivo ingresado no tiene la extensi
 
 [Link de Trello]https://trello.com/b/SGWTc1bO/markdown-links
 
+[graphic]https://www.graphicpear.com/edge/
+

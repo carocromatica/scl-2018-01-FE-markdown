@@ -17,6 +17,11 @@ function readFilePromise(filePath) {
           console.log('ingrese archivo valido');
           return reject(error);
         }
+
+        if (filePath === '') { 
+          console.log('ruta vacia');
+          return reject(error);
+        }
         return reject(error);
       }  
       markdownLinkExtractor(data);
@@ -30,10 +35,11 @@ readFilePromise(userCLIArgs[0]).then(() => {
   console.error('Error > ' + error);
 });
 
+
 // Función necesaria para extraer los links usando marked
 // (tomada desde biblioteca del mismo nombre y modificada para el ejercicio)
 // Recibe texto en markdown y retorna sus links en un arreglo
-function markdownLinkExtractor(markdown, numLine) {
+function markdownLinkExtractor(markdown) {
   const renderer = new Marked.Renderer();
 
   // Taken from https://github.com/markedjs/marked/issues/1279
@@ -43,51 +49,73 @@ function markdownLinkExtractor(markdown, numLine) {
   Marked.InlineLexer.rules.gfm.link = linkWithImageSizeSupport;
   Marked.InlineLexer.rules.breaks.link = linkWithImageSizeSupport;
 
-  renderer.link = function(href, title, text, numLine) {
+  renderer.link = function(href, title, text) {
     links.push({
       href,
       text,
       title,
-      numLine
+
+    
     });
   };
-  renderer.image = function(href, title, text, numLine) {
+  renderer.image = function(href, title, text) {
     // Remove image size at the end, e.g. ' =20%x50'
     href = href.replace(/ =\d*%?x\d*%?$/, '');
     links.push({
       href,
       text,
       title,
-      numLine,
     
     });
+   
 
     if (links === []) {
       console.log(links + 'El archivo no contiene hipervinculos');
     }
-  
   };
+
   Marked(markdown, { renderer });
 
-  // FUNCIÓN QUE LEE LINEAS
+
+  // --------------------------- FUNCIÓN QUE LEE LINEAS
   let text = fs.readFileSync(userCLIArgs[0]).toString(); // lee todo el archivo
   let lines = text.split('\n');
-  // console.log(lines);
+  let n = 0; 
 
-  let lineline = lines.forEach((element, index)=> {
-    numLine = index + 1;    
-    // console.log(numLine + '...' + element);
+  let arrayfinal=[];
+
+  lines.map((element, index)=> {
+    numLine = index;    
+    let newline = index + '' + element;
+    //console.log(newline);
+    
+    if (newline.search('https://' || 'http://')) {
+      n = newline.search('https://' || 'http://');
+    }
+    if (n !== -1) {
+      finalnumline = numLine + 1;
+       let rescate=finalnumline + '  ' + element.slice(0,- 2);
+       arrayfinal.push(rescate)
+
+    }
   }) ;
 
-  // fin FUNCIÓN QUE LEE LINEAS{}
+  console.log(arrayfinal)
 
-  links.forEach((element, lineline) => { // busca dentro del objeto links
+//console.log(links)
+
+  //  ------------------------ fin FUNCIÓN QUE LEE LINEAS{}
+
+
+  links.forEach((element) => { // busca dentro del objeto links
     const url = element.href;
     const txt = element.text;
-    const line = lineline;
+    const linea = finalnumline;
+    
+    
     fetch(url).then(response => response).then((data) => {
       validate = {
-        'Status': data.status + ' ' + data.statusText + ' // Linea: ' + line + ': [' + txt + ']~ ' + url,
+        'Status': data.status + ' ' + data.statusText + ' // Linea: ' + linea + ': [' + txt + ']~ ' + url,
       };
 
       if (data.status >= 200 && data.status <= 399) {
