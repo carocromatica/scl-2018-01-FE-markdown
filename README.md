@@ -1,4 +1,4 @@
-![mdlinks](https://i.imgur.com/Dm8VQx2.png)
+
 # Md-Links
 
 ## Presentación
@@ -8,11 +8,6 @@ Si los hipervínculos no tienen problemas se visualizarán en **verde**, de lo c
 
 #### Vista Previa
 ![mdlinks](https://i.imgur.com/Dm8VQx2.png)
-![mdlinks](https://i.imgur.com/Dm8VQx2.png)
-![mdlinks](https://i.imgur.com/Dm8VQx2dsadasd.png)
-
-
-
 
 
 ## Instalación y uso (versión de prueba)
@@ -42,5 +37,5 @@ La aplicación mostrará en pantalla si el archivo ingresado no tiene la extensi
 
 [Link de Trello]https://trello.com/b/SGWTc1bO/markdown-links
 
-[graphic]https://www.graphicpear.com/edge/
 
+https://www.npmjs.com/package/caro-mdlinks#pre%C3%A1mbulo
